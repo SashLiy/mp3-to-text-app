@@ -1,0 +1,10 @@
+http://127.0.0.1:5000/
+
+1. first open vs code
+2. upload folder of "C:\Users\Asus\mp3-to-text-app"
+3. open app.py and save
+3. open index.html, results.html and save it
+4. open command prmpt and type 
+cd "C:\Users\Asus\mp3-to-text-app" next 
+python app.py 
+5. open the chrome and copy paste http://127.0.0.1:5000/
