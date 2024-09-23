@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP3 to Text Converter</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 50px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        img {
+            max-width: 350px;
+            margin-bottom: 30px;
+        }
+        button {
+            background-color: #490d61;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2575fc;
+        }
+        #downloadButton {
+            display: none;
+            margin-top: 20px;
+        }
+        #transcriptionResult {
+            white-space: pre-wrap;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: left;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://tse3.mm.bing.net/th?id=OIP.vCkuLHrtyeFw4OmqEEuk_AHaEc&pid=Api&P=0&h=220" alt="MP3 to Text Converter">
+        <h1>MP3 to Text Converter</h1>
+        <input type="file" id="fileInput" accept=".mp3">
+        <br><br>
+        <button onclick="uploadFile()">Convert to Text</button>
+        <div id="transcriptionResult"></div>
+        <a id="downloadButton" href="#" download>
+            <button>Download Transcription as TXT</button>
+        </a>
+    </div>
+
+    <script>
+        function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the transcription text
+                document.getElementById('transcriptionResult').innerText = data.text;
+
+                // Enable the download button and set the href to the download URL
+                const downloadButton = document.getElementById('downloadButton');
+                downloadButton.href = data.download_url;
+                downloadButton.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
